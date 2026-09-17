@@ -95,7 +95,7 @@ Requires Python >= 3.9.
 import numpy as np
 from funcgarch import fit, garch_filter
 
-# mY: (N, T) matrix of intraday return curves — N grid points per day, T days
+# mY: (N, T) matrix of intraday return curves, N grid points per day, T days
 mY = np.load("returns.npy")
 N, T = mY.shape
 M = 4  # number of Bernstein basis functions
@@ -150,13 +150,22 @@ wrds/*.sas                    scripts/taq_cleaner.py           funcgarch/*.py
 └────────────────┘            └───────────────────┘           └─────────────────────┘
 ```
 
-Dependency direction: `funcgarch` (core package) has no dependency on `data/` or `wrds/` — it only
+Dependency direction: `funcgarch` (core package) has no dependency on `data/` or `wrds/`, it only
 consumes an `(N, T)` return matrix. The `data/taq_cleaner.py` pipeline depends on raw output from the
 `wrds/*.sas` scripts. `examples/*.ipynb` depend on both `funcgarch` and pre-cleaned data.
 
 ---
 
 ## Repository Layout
+
+```
+funcgarch/   # Core package: Bernstein/B-spline basis, GARCH and GAS estimators, simulation utilities
+scripts/     # Data pipeline and volatility surface plotting scripts
+data/        # Sample and cleaned return data
+wrds/        # SAS scripts for WRDS TAQ data pulls
+docs/        # Reference PDFs and images
+tests/       # Test suite (pytest)
+```
 
 ---
 
